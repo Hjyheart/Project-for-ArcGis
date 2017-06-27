@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=title %></title>
+        <link rel="stylesheet" href="/stylesheets/index.css"/>
+        <link rel="stylesheet" href="/stylesheets/mscarousel.css"/>
+        <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="/javascripts/jquery.msCarousel-min.js"></script>
+        <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
+        <script src="/javascripts/echarts.min.js"></script>
+        <script src="https://js.arcgis.com/4.3/"></script>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="sider-bar">
+                <div class="three">
+                    <img src="/images/three1.svg" alt="">
+                </div>
+                <div class="item" onmouseover="activeMsg(1)" onmouseout="removeActiveId()" onclick="changePage(1)">
+                    <img src="/images/more.svg" alt="" id="pic-one">
+                    <p>文化产业分布</p>
+                    <div class="aside" id="msg-one">
+                        <span>文化产业分布</span>
+                    </div>
+                </div>
+                <div class="sub">
+                </div>
+                <div class="item" onmouseover="activeMsg(2)" onmouseout="removeActiveId()" onclick="changePage(2)">
+                    <img src="/images/more.svg" alt="">
+                    <p>文化历史因素</p>
+                    <div class="aside" id="msg-two">
+                        <span>文化历史因素</span>
+                    </div>
+                </div>
+                <div class="item" onmouseover="activeMsg(3)" onmouseout="removeActiveId()" onclick="changePage(3)">
+                    <img src="/images/more.svg" alt="">
+                    <p>文化产业热点</p>
+                    <div class="aside" id="msg-three">
+                        <span>文化产业热点</span>
+                    </div>
+                </div>
+                <div class="item" onmouseover="activeMsg(4)" onmouseout="removeActiveId()" onclick="activeSub(event)">
+                    <img src="/images/more.svg" alt="">
+                    <p>交通压力分析</p>
+                    <div class="aside" id="msg-four">
+                        <span>交通压力分析</span>
+                    </div>
+                </div>
+                <div class="sub">
+                    <ul>
+                        <li>
+                            <a>小标题</a>
+                        </li>
+                        <li>
+                            <a>小标题</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="item" onmouseover="activeMsg(5)" onmouseout="removeActiveId()" onclick="activeSub(event)">
+                    <img src="/images/more.svg" alt="">
+                    <p>文化产业重新规划</p>
+                    <div class="aside" id="msg-five">
+                        <span>文化产业重新规划</span>
+                    </div>
+                </div>
+                <div class="sub">
+                    <ul>
+                        <li>
+                            <a>小标题</a>
+                        </li>
+                        <li>
+                            <a>小标题</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="item" onmouseover="activeMsg(6)" onmouseout="removeActiveId()" onclick="activeSub(event)">
+                    <img src="/images/more.svg" alt="">
+                    <p>经济适用房规划</p>
+                    <div class="aside" id="msg-six">
+                        <span>经济适用房规划</span>
+                    </div>
+                </div>
+                <div class="sub">
+                    <ul>
+                        <li>
+                            <a>小标题</a>
+                        </li>
+                        <li>
+                            <a>小标题</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="item" onmouseover="activeMsg(7)" onmouseout="removeActiveId()" onclick="console.log(activeId)">
+                    <img src="/images/more.svg" alt="">
+                    <p>环同济经济圈</p>
+                    <div class="aside" id="msg-seven">
+                        <span>环同济经济圈</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-container">
+                <!--地图-->
+                <%include pageOne.ejs%>
+                <%include pageTwo.ejs%>
+                <%include pageThree.ejs%>
+            </div>
+        </div>
+
+        <script>
+          var active = false;
+          var activeId = -1;
+          var curPage = 1;
+
+          $(document).ready(function(){
+
+
+
+            $('.three').click(function () {
+              if (active === false) {
+                $('.sider-bar').addClass('active')
+                active = !active;
+              } else {
+                $('.sider-bar').removeClass('active')
+                active = !active;
+              }
+            })
+
+          });
+
+          function activeMsg(id) {
+            activeId = id;
+            if (active && activeId === 1) {
+              $('#msg-one').addClass('active')
+            }else if (active && activeId === 2) {
+              $('#msg-two').addClass('active')
+            }else if (active && activeId === 3) {
+              $('#msg-three').addClass('active')
+            }else if (active && activeId === 4) {
+              $('#msg-four').addClass('active')
+            }else if (active && activeId === 5) {
+              $('#msg-five').addClass('active')
+            }else if (active && activeId === 6) {
+              $('#msg-six').addClass('active')
+            }else if (active && activeId === 7) {
+              $('#msg-seven').addClass('active')
+            }
+
+          }
+
+          function removeActiveId() {
+            activeId = -1;
+            $('#msg-one').removeClass('active')
+            $('#msg-two').removeClass('active')
+            $('#msg-three').removeClass('active')
+            $('#msg-four').removeClass('active')
+            $('#msg-five').removeClass('active')
+            $('#msg-six').removeClass('active')
+            $('#msg-seven').removeClass('active')
+          }
+
+
+          function activeSub(event) {
+            var e = event.currentTarget
+            if (e.childNodes[1].getAttribute('src') === '/images/more.svg') {
+              e.childNodes[1].src = '/images/arrow-down.svg'
+              e.nextElementSibling.className = 'sub active'
+            }else if (e.childNodes[1].getAttribute('src') === '/images/arrow-down.svg'){
+              e.nextElementSibling.className = 'sub'
+              e.childNodes[1].src = '/images/more.svg'
+
+            }
+          }
+
+          function changePage(pageId) {
+            curPage = pageId;
+            clearPage();
+            if (curPage === 1) {
+              $('.pageOne').removeClass('active');
+            }else if (curPage === 2){
+              $('.pageTwo').removeClass('active');
+            }else if (curPage === 3) {
+              $('.pageThree').removeClass('active');
+            }
+          }
+
+          function clearPage() {
+            $('.pageOne').addClass('active');
+            $('.pageTwo').addClass('active');
+            $('.pageThree').addClass('active');
+          }
+        </script>
+    </body>
+</html>

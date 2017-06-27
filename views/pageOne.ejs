@@ -1,0 +1,120 @@
+<div class="pageOne container">
+    <div id="viewDiv"></div>
+    <h2>文化产业在各个区的分布</h2>
+    <div id="main" style="width: 80%;height:400px;"></div>
+</div>
+<script>
+  var myChart = echarts.init(document.getElementById('main'));
+
+  // 指定图表的配置项和数据
+  option = {
+    title : {
+      text: '文化产业在各个区的分布',
+      subtext: '上海市',
+      x:'center'
+    },
+    tooltip : {
+      trigger: 'item',
+      formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+      x : 'center',
+      y : 'bottom',
+      data:['宝山区','嘉定区','杨浦区','闸北区','虹口区','普陀区','青浦区', '闵行区', '黄浦区', '长宁区', '静安区', '卢湾区',
+        '徐汇区', '松江区', '奉贤区', '浦东新区', '金山区', '崇明县']
+    },
+    toolbox: {
+      show : true,
+      feature : {
+        mark : {show: true},
+        dataView : {show: true, readOnly: false},
+        magicType : {
+          show: true,
+          type: ['pie', 'funnel']
+        },
+        restore : {show: true},
+        saveAsImage : {show: true}
+      }
+    },
+    calculable : true,
+    series : [
+      {
+        name:'文化产业数量',
+        type:'pie',
+        radius : [30, 110],
+        roseType : 'area',
+        data:[
+          {value:1871, name:'宝山区'},
+          {value:2280, name:'嘉定区'},
+          {value:3317, name:'杨浦区'},
+          {value:2682, name:'闸北区'},
+          {value:2249, name:'虹口区'},
+          {value:4073, name:'普陀区'},
+          {value:883, name:'青浦区'},
+          {value:5056, name:'闵行区'},
+          {value:2496, name:'黄浦区'},
+          {value:3860, name:'长宁区'},
+          {value:3038, name:'静安区'},
+          {value:1955, name:'卢湾区'},
+          {value:7674, name:'徐汇区'},
+          {value:1917, name:'松江区'},
+          {value:708, name:'奉贤区'},
+          {value:8264, name:'浦东新区'},
+          {value:515, name:'金山区'},
+          {value:147, name:'崇明县'},
+        ]
+      }
+    ]
+  };
+
+  myChart.setOption(option);
+
+
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "dojo/domReady!"
+  ], function(Map, MapView){
+    var map = new Map({
+      basemap: "streets"
+    });
+    var view = new MapView({
+      container: "viewDiv",  // Reference to the scene div created in step 5
+      map: map,  // Reference to the map object created before the scene
+      zoom: 4,  // Sets the zoom level based on level of detail (LOD)
+      center: [15, 65]  // Sets the center point of view in lon/lat
+    });
+  });
+
+</script>
+
+
+<style>
+    .pageOne.container {
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .pageOne.container > div {
+        margin: 20px;
+    }
+
+    .pageOne.container > h2 {
+        align-self: flex-start;
+        color: #0088f5;
+        font-size: 1.2em;
+        margin: 40px;
+    }
+
+    .pageOne.container.active {
+        display: none;
+    }
+
+    /*.esri-view {*/
+        /*overflow: auto !important;*/
+    /*}*/
+</style>

@@ -1,0 +1,213 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big,
+cite, code, del, dfn, em, font, img,
+ins, kbd, q, s, samp, small, strike,
+strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+center, u, b, i {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline
+}
+body {
+    line-height: 1
+}
+:focus {
+    outline: 0
+}
+ol, ul {
+    list-style: none
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: ''
+}
+blockquote, q {
+    quotes: "" ""
+}
+input, textarea {
+    margin: 0;
+    padding: 0
+}
+hr {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: #000;
+    background-color: #000;
+    height: 1px
+}
+
+body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.main-container {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.sider-bar {
+    width: 250px;
+    height: 100%;
+    background-color: #333844;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s;
+}
+
+.sider-bar.active {
+    width: 40px;
+}
+
+.three {
+    background-color: #4A5164;
+    width: 100%;
+    cursor: pointer;
+}
+
+.three img {
+    position: relative;
+    width: 15px;
+    margin: 0 auto;
+    left: 45%;
+    color: gray;
+    height: 35px;
+    transition: 0.5s;
+}
+
+.sider-bar.active img {
+    left: 30%;
+}
+
+.item {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: flex-start;
+    background-color: #42495B;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    color: white;
+    font-size: 0.7em;
+    cursor: pointer;
+}
+
+.item:hover {
+    background-color: #22C2DD;
+}
+
+.item img {
+    width: 20px;
+    padding: 11px;
+}
+
+.item p {
+    position: relative;
+    padding: 15px;
+    left: 15px;
+}
+
+/* aside only for active status */
+.aside {
+    display: none;
+    position: absolute;
+    width: 100px;
+    left: 48px;
+    height: 11px;
+    background-color: #373D41;
+    padding: 12px;
+    margin: 3px;
+    z-index: 10000;
+}
+
+.aside::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 8px;
+    border: 10px solid #373D41;
+    border-color: transparent #373D41 transparent transparent;
+}
+
+.aside.active {
+    display: block;
+}
+
+/* sub */
+.sub {
+    width: 100%;
+    text-align: center;
+    transition: 0.5s;
+}
+
+.sub > ul {
+    width: 100%;
+}
+
+.sub.active > ul > li {
+    height: 20px;
+    padding-top: 10px;
+}
+
+.sub > ul > li {
+    height: 0;
+    width: 100%;
+    color: white;
+    font-size: 0.8em;
+    background-color: RGBA(45, 48, 60, 1.00);
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.sub > ul > li:hover {
+    background-color: #42495B;
+}
+
+.sub > ul > li > a {
+    margin-left: 10px;
+    padding: 5px;
+}
+
+/* map */
+
+.sub-container {
+    width: 100%;
+    height: 100%;
+}
+
+#viewDiv {
+    padding: 0;
+    margin: 10px;
+    height: 40%;
+    width: 100%;
+    max-width: calc(100% - 202px);
+}
+
+#viewDiv.active {
+    display: none;
+}
+
+#main.active {
+    display: none;
+}

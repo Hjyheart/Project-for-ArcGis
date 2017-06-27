@@ -1,0 +1,85 @@
+<div class="pageTwo container active">
+    <h2>历史文化因素</h2>
+    <div id="main1" style="width: 80%;height:400px;"></div>
+</div>
+
+<script>
+  var myChart1 = echarts.init(document.getElementById('main1'));
+
+  option1 = {
+    title: {
+      text: '历史文化因素',
+      subtext: '计算结果'
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    legend: {
+      data: ['有形', '无形', '产业']
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'value',
+      boundaryGap: [0, 0.01]
+    },
+    yAxis: {
+      type: 'category',
+      data: ['宝山区','嘉定区','杨浦区','闸北区','虹口区','普陀区','青浦区', '闵行区', '黄浦区', '长宁区', '静安区', '卢湾区',
+        '徐汇区', '松江区', '奉贤区', '浦东新区', '金山区', '崇明县']
+    },
+    series: [
+      {
+        name: '有形',
+        type: 'bar',
+        data: [3.186, 2.814, 4.1349, 3.3071, 4, 4.3071, 3.0649, 3.3071, 4.628, 3.628, 4.628, 4.5069, 4.4931, 3.3071, 3.186,
+          4.6929, 2.372, 2.558]
+      },
+      {
+        name: '无形',
+        type: 'bar',
+        data: [3.3124, 3.0579, 4.1684, 2.7966, 4, 3.2579, 3.8316, 3.4263, 4.4842, 3.5192, 4, 3.5387, 3.9455, 3.2034, 3.2, 3.5158,
+          2.5158, 2.5703]
+      },
+      {
+        name: '产业',
+        type: 'bar',
+        data: [2.2393, 3.7601, 4.9995, 3.2392, 3.7018, 2.9997, 2.2393, 4.0579, 4.7017, 3.7018, 3.9413, 3.2392, 4.76, 3.7601, 2.8349, 4.4039,
+          1.9998, 1.4789]
+      }
+    ]
+  };
+  myChart1.setOption(option1);
+</script>
+
+<style>
+    .pageTwo.container {
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+    }
+
+    .pageTwo.container > div {
+        margin: 20px;
+    }
+
+    .pageTwo.container > h2 {
+        align-self: flex-start;
+        color: #0088f5;
+        font-size: 1.2em;
+        margin: 40px;
+    }
+
+    .pageTwo.container.active {
+        display: none;
+    }
+</style>
