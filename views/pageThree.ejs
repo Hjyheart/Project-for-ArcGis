@@ -1,5 +1,5 @@
 <div class="pageThree container active">
-    <div id="viewDiv1"></div>
+    <div id="viewDiv3"></div>
     <h2>人民广场热点分析</h2>
     <div class="mainGallery">
         <table border="0" cellspacing="0" cellpadding="0" class="bigtable">
@@ -335,24 +335,59 @@
   require([
     "esri/Map",
     "esri/views/MapView",
+    "esri/layers/FeatureLayer",
     "dojo/domReady!"
-  ], function(Map, MapView){
+  ], function(Map, MapView, FeatureLayer){
+    var template = {
+      title: "热点分析：",
+      content: "<p>{Name}</p>共{Join_Count}个文化产业",
+      fieldInfos: [{
+        fieldName: "MARRIED_CY",
+        format: {
+          digitSeparator: true, // Use a comma separator for large numbers
+          places: 0 // Sets the number of decimal places to 0 and rounds up
+        }
+      }, {
+        fieldName: "NEVMARR_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }, {
+        fieldName: "DIVORCD_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }]
+    };
+
+    // Create the Map
     var map = new Map({
-      basemap: "streets"
+      basemap: "gray"
     });
+
+    // Create the MapView
     var view = new MapView({
-      container: "viewDiv1",  // Reference to the scene div created in step 5
-      map: map,  // Reference to the map object created before the scene
-      zoom: 4,  // Sets the zoom level based on level of detail (LOD)
-      center: [15, 65]  // Sets the center point of view in lon/lat
+      container: "viewDiv3",
+      map: map,
+      center: [121.4737, 31.2304],
+      zoom: 11
     });
+
+    var featureLayer = new FeatureLayer({
+      url: "https://192.168.1.50:6443/arcgis/rest/services/culture_poi/MapServer/1",
+      outFields: ["*"],
+      popupTemplate: template
+    });
+    map.add(featureLayer)
   });
 
 </script>
 
 
 <style>
-    #viewDiv1 {
+    #viewDiv3 {
         padding: 0;
         margin: 10px;
         height: 40%;
@@ -360,7 +395,7 @@
         max-width: calc(100% - 202px);
     }
 
-    #viewDiv1.active {
+    #viewDiv3.active {
         display: none;
     }
 
@@ -381,7 +416,7 @@
         align-self: flex-start;
         color: #0088f5;
         font-size: 1.2em;
-        margin: 40px;
+        margin: 20px 40px 10px 40px;
     }
 
     .pageThree.container.active {

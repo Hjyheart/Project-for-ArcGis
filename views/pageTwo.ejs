@@ -1,4 +1,14 @@
 <div class="pageTwo container active">
+
+    <div class="map-container active" id="2-1">
+        <div id="viewDiv2-1"></div>
+    </div>
+    <div class="map-container active" id="2-2">
+        <div id="viewDiv2-2"></div>
+    </div>
+    <div class="map-container active" id="2-3">
+        <div id="viewDiv2-3"></div>
+    </div>
     <h2>历史文化因素</h2>
     <div id="main1" style="width: 80%;height:400px;"></div>
 </div>
@@ -57,6 +67,161 @@
     ]
   };
   myChart1.setOption(option1);
+
+
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/FeatureLayer",
+    "dojo/domReady!"
+  ], function(Map, MapView, FeatureLayer){
+    var template = {
+      title: "文化历史区域信息：",
+      content: "<p>{区县级行政区划.Name} 有形</p>" + "{history.csv.有形}",
+      fieldInfos: [{
+        fieldName: "MARRIED_CY",
+        format: {
+          digitSeparator: true, // Use a comma separator for large numbers
+          places: 0 // Sets the number of decimal places to 0 and rounds up
+        }
+      }, {
+        fieldName: "NEVMARR_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }, {
+        fieldName: "DIVORCD_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }]
+    };
+
+    // Create the Map
+    var map = new Map({
+      basemap: "gray"
+    });
+
+    // Create the MapView
+    var view = new MapView({
+      container: "viewDiv2-1",
+      map: map,
+      center: [121.4737, 31.2304],
+      zoom: 10
+    });
+
+    var featureLayer = new FeatureLayer({
+      url: "https://192.168.1.50:6443/arcgis/rest/services/History/MapServer/0",
+      outFields: ["*"],
+      popupTemplate: template
+    });
+    map.add(featureLayer)
+  });
+
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/FeatureLayer",
+    "dojo/domReady!"
+  ], function(Map, MapView, FeatureLayer){
+    var template = {
+      title: "文化历史区域信息：",
+      content: "<p>{区县级行政区划.Name} 无形</p>" + "{history.csv.无形}",
+      fieldInfos: [{
+        fieldName: "MARRIED_CY",
+        format: {
+          digitSeparator: true, // Use a comma separator for large numbers
+          places: 0 // Sets the number of decimal places to 0 and rounds up
+        }
+      }, {
+        fieldName: "NEVMARR_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }, {
+        fieldName: "DIVORCD_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }]
+    };
+
+    // Create the Map
+    var map = new Map({
+      basemap: "gray"
+    });
+
+    // Create the MapView
+    var view = new MapView({
+      container: "viewDiv2-2",
+      map: map,
+      center: [121.4737, 31.2304],
+      zoom: 10
+    });
+
+    var featureLayer = new FeatureLayer({
+      url:  "https://192.168.1.50:6443/arcgis/rest/services/History/MapServer/1",
+      outFields: ["*"],
+      popupTemplate: template
+    });
+    map.add(featureLayer)
+  });
+
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/FeatureLayer",
+    "dojo/domReady!"
+  ], function(Map, MapView, FeatureLayer){
+    var template = {
+      title: "文化历史区域信息：",
+      content: "<p>{区县级行政区划.Name} 产业</p>" + "{history.csv.产业}",
+      fieldInfos: [{
+        fieldName: "MARRIED_CY",
+        format: {
+          digitSeparator: true, // Use a comma separator for large numbers
+          places: 0 // Sets the number of decimal places to 0 and rounds up
+        }
+      }, {
+        fieldName: "NEVMARR_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }, {
+        fieldName: "DIVORCD_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }]
+    };
+
+    // Create the Map
+    var map = new Map({
+      basemap: "gray"
+    });
+
+    // Create the MapView
+    var view = new MapView({
+      container: "viewDiv2-3",
+      map: map,
+      center: [121.4737, 31.2304],
+      zoom: 10
+    });
+
+    var featureLayer = new FeatureLayer({
+      url: "https://192.168.1.50:6443/arcgis/rest/services/History/MapServer/2",
+      outFields: ["*"],
+      popupTemplate: template
+    });
+    map.add(featureLayer)
+  });
+
 </script>
 
 <style>
@@ -82,4 +247,32 @@
     .pageTwo.container.active {
         display: none;
     }
+
+    #viewDiv2-1 {
+        height: 100%;
+        width: 100%;
+    }
+
+    #viewDiv2-2 {
+        height: 100%;
+        width: 100%;
+    }
+
+    #viewDiv2-3 {
+        height: 100%;
+        width: 100%;
+    }
+
+    .map-container {
+        padding: 0;
+        margin: 10px;
+        width: 100%;
+        height: 400px;
+        max-width: calc(100% - 202px);
+    }
+
+    .map-container.active {
+        display: none;
+    }
+
 </style>
