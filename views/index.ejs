@@ -39,7 +39,7 @@
                         <span>文化产业热点</span>
                     </div>
                 </div>
-                <div class="item" onmouseover="activeMsg(4)" onmouseout="removeActiveId()" onclick="activeSub(event)">
+                <div class="item" onmouseover="activeMsg(4)" onmouseout="removeActiveId()" onclick="changePage(4)">
                     <img src="/images/more.svg" alt="">
                     <p>交通压力分析</p>
                     <div class="aside" id="msg-four">
@@ -103,6 +103,7 @@
                 <%include pageOne.ejs%>
                 <%include pageTwo.ejs%>
                 <%include pageThree.ejs%>
+                <%include pageFour.ejs%>
             </div>
         </div>
 
@@ -180,6 +181,8 @@
               $('.pageTwo').removeClass('active');
             }else if (curPage === 3) {
               $('.pageThree').removeClass('active');
+            }else if (curPage === 4) {
+              $('.pageFour').removeClass('active');
             }
           }
 
@@ -187,6 +190,7 @@
             $('.pageOne').addClass('active');
             $('.pageTwo').addClass('active');
             $('.pageThree').addClass('active');
+            $('.pageFour').addClass('active');
           }
         </script>
     </body>

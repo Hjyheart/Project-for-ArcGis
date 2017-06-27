@@ -1,0 +1,95 @@
+<div class="pageFour container active">
+    <div id="viewDiv4"></div>
+    <h2>交通压力分析</h2>
+    <div id="main" style="width: 80%;height:400px;"></div>
+</div>
+<script>
+
+  require([
+      
+    "esri/Map",
+    
+    "esri/views/MapView",
+      "esri/tasks/Locator",
+    
+    "esri/layers/FeatureLayer", 
+       
+    "dojo/domReady!"
+  ], function(Map, MapView,
+  Locator,
+                FeatureLayer){
+    var map = new Map({
+      basemap: "gray"
+    });
+    var view = new MapView({
+      container: "viewDiv4",  // Reference to the scene div created in step 5
+      map: map,  // Reference to the map object created before the scene
+      zoom: 12,  // Sets the zoom level based on level of detail (LOD)
+      center: [121, 31]  // Sets the center point of view in lon/lat
+    });
+
+    var template = {
+        title: "",
+        content: "<b>{NAME}</b>"
+    };
+
+    for (let i = 8; i <= 14; i++) {
+        var featureLayer = new FeatureLayer({
+            url: "https://192.168.1.50:6443/arcgis/rest/services/ShanghaiMap/MapServer/"+i,
+            outFields: ["*"],
+            popupTemplate: template,
+        });
+        map.add(featureLayer);     
+    }
+
+    var featureLayer = new FeatureLayer({
+        url: "https://192.168.1.50:6443/arcgis/rest/services/hot_line/MapServer/0"
+    });
+
+    map.add(featureLayer);
+  });
+
+</script>
+
+
+<style>
+    .pageFour.container {
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .pageFour.container > div {
+        margin: 20px;
+    }
+
+    .pageFour.container > h2 {
+        align-self: flex-start;
+        color: #0088f5;
+        font-size: 1.2em;
+        margin: 40px;
+    }
+
+    .pageFour.container.active {
+        display: none;
+    }
+
+    #viewDiv4 {
+        padding: 0;
+        margin: 10px;
+        height: 40%;
+        width: 100%;
+        max-width: calc(100% - 202px);
+    }
+
+    #viewDiv4.active {
+        display: none;
+    }
+
+    /*.esri-view {*/
+        /*overflow: auto !important;*/
+    /*}*/
+</style>
