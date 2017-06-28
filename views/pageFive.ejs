@@ -1,5 +1,26 @@
 <div class="pageFive container active">
-    <div id="viewDiv5"></div>
+    <div class="map-container active" id="5-1">
+        <div id="viewDiv5-1"></div>
+    </div>
+    <div class="map-container active" id="5-2">
+        <div id="viewDiv5-2"></div>
+    </div>
+    <select id="area_select">
+        <option value="0">宝山区</option>
+        <option value="1">长宁区</option>
+        <option value="2">奉贤区</option>
+        <option value="3">虹口区</option>
+        <option value="4">黄浦区</option>
+        <option value="5">嘉定区</option>
+        <option value="6">静安区</option>
+        <option value="7">金山区</option>
+        <option value="8">闵行区</option>
+        <option value="9">浦东新区</option>              
+        <option value="10">普陀区</option>       
+        <option value="11">松江区</option>
+        <option value="12">徐汇区</option>
+        <option value="13">杨浦区</option>
+    </select>
     <h2>文化产业重新规划</h2>
     <div id="main" style="width: 80%;height:400px;"></div>
 </div>
@@ -28,36 +49,84 @@
       });
 
       var view = new MapView({
-        container: "viewDiv5",
+        container: "viewDiv5-1",
         map: map,
-        center: [-85.050200, 33.125524],
+        center: [121, 31],
         zoom: 6
       });
 
-      // Create FeatureLayer instance with popupTemplate
-
-      var povLyr = new FeatureLayer({
-        url: "https://10.60.42.201:6443/arcgis/rest/services/NeighbourService/MapServer/0",
-        outFields: ["*"],
-        popupTemplate: {
-          title: "{type}, {name}",
-          content: "{POP_POVERTY} of {TOTPOP_CY} people live below the poverty line.",
-          fieldInfos: [
-          {
-            fieldName: "POP_POVERTY",
-            format: {
-              digitSeparator: true,
-              places: 0
-            }
-          }, {
-            fieldName: "TOTPOP_CY",
-            format: {
-              digitSeparator: true,
-              places: 0
-            }
-          }]
-        }
+      var map2 = new Map({
+        basemap: "gray"
       });
+
+      var view2 = new MapView({
+        container: "viewDiv5-2",
+        map: map2,
+        center: [121, 31],
+        zoom: 6
+      });
+
+      
+        map_urls = ["baoshanService", "changningService", "fengxianService", "hongkouService", "huangpuService", "jiadingService", "jinganService", 
+        "jinshanService", "minghangService", "pudongService", "putuoService", "songjiangService", "xuhuiService", "yangpuService"];
+        feature_layers = [];
+        for (let i = 0, length = map_urls.length; i < length; i++) {
+            let tmpLayer = new FeatureLayer({
+                url: "https://192.168.1.50:6443/arcgis/rest/services/"+map_urls[i]+"/MapServer/0",
+                visible:false
+            });
+            feature_layers.push(tmpLayer);
+            map2.add(tmpLayer);  
+            
+        }
+        let last = 0;
+        feature_layers[0].visible =true;
+        $("#area_select").change(function() {
+            feature_layers[last].visible =false;
+            last = parseInt($(this).val());
+            feature_layers[last].visible =true
+        })
+
+        // var template = {
+        //     title: "文化产业区域信息：",
+        //     content: "<p>{Name}</p>" + "一共有{Join_Count}个文化产业",
+        //     fieldInfos: [{
+        //     fieldName: "MARRIED_CY",
+        //     format: {
+        //     digitSeparator: true, // Use a comma separator for large numbers
+        //     places: 0 // Sets the number of decimal places to 0 and rounds up
+        //     }
+        // }, {
+        //     fieldName: "NEVMARR_CY",
+        //     format: {
+        //     digitSeparator: true,
+        //     places: 0
+        //     }
+        // }, {
+        //     fieldName: "DIVORCD_CY",
+        //     format: {
+        //     digitSeparator: true,
+        //     places: 0
+        //     }
+        // }]
+        // };
+        // // Create FeatureLayer instance with popupTemplate
+        // var featureLayer = new FeatureLayer({
+        //     url: "https://192.168.1.50:6443/arcgis/rest/services/culture_poi/MapServer/0",
+        //     outFields: ["*"],
+        //     popupTemplate: template
+        // });
+
+        // map.add(featureLayer)
+
+        var povLyr = new FeatureLayer({
+            url: "https://10.60.42.201:6443/arcgis/rest/services/NeighbourService/MapServer/0",
+            outFields: ["*"],
+            popupTemplate: {
+            title: "{type}区 {name}",
+            content: "{name} 的房价为 {price}."
+        }
+    });
 
       // configure parameters for the size renderer generator
       // the layer must be specified along with a field name.
@@ -67,8 +136,8 @@
       var sizeParams = {
         layer: povLyr,
         basemap: map.basemap,
-        field: "POP_POVERTY",
-        normalizationField: "TOTPOP_CY",
+        field: "price",
+        normalizationField: "avg_price",
         legendOptions: {
           title: "Ratio of people living in poverty"
         },
@@ -140,7 +209,6 @@
 
           // when the user slides the handle(s), update the renderer
           // with the updated color visual variable object
-
           on(sizeSlider, "handle-value-change", function() {
             var renderer = povLyr.renderer.clone();
             renderer.visualVariables = [lang.clone(sizeSlider.visualVariable)];
@@ -150,7 +218,6 @@
         .otherwise(function(err) {
           console.log("there was an error: ", err);
         });
-
     });
 
 </script>
@@ -181,17 +248,30 @@
         display: none;
     }
 
-    #viewDiv5 {
+    #viewDiv5-1 {
         padding: 0;
         margin: 10px;
-        height: 40%;
+        height: 100%;
         width: 100%;
         max-width: calc(100% - 202px);
     }
 
-    #viewDiv5.active {
+    #viewDiv5-1.active {
         display: none;
     }
+
+    #viewDiv5-2 {
+        padding: 0;
+        margin: 10px;
+        height: 100%;
+        width: 100%;
+        max-width: calc(100% - 202px);
+    }
+
+    #viewDiv5-2.active {
+        display: none;
+    }
+
 
     /*.esri-view {*/
         /*overflow: auto !important;*/

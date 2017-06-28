@@ -66,6 +66,16 @@
                         <span>文化产业重新规划</span>
                     </div>
                 </div>
+                <div class="sub">
+                    <ul>
+                        <li>
+                            <a onclick="changePage(5, 1)">房价水平</a>
+                        </li>
+                        <li>
+                            <a onclick="changePage(5, 2)">Huff 模型</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="item" onmouseover="activeMsg(6)" onmouseout="removeActiveId()" onclick="activeSub(event)">
                     <img src="/images/more.svg" alt="">
                     <p>经济适用房规划</p>
@@ -80,6 +90,13 @@
                         <span>环同济经济圈</span>
                     </div>
                 </div>
+                <div class="item" onmouseover="activeMsg(8)" onmouseout="removeActiveId()" onclick="changePage(8)">
+                    <img src="/images/more.svg" alt="">
+                    <p>最短路计算</p>
+                    <div class="aside" id="msg-eight">
+                        <span>最短路计算</span>
+                    </div>
+                </div>
             </div>
             <div class="sub-container">
                 <!--地图-->
@@ -87,7 +104,8 @@
                 <%include pageTwo.ejs%>
                 <%include pageThree.ejs%>
                 <%include pageFour.ejs%>
-                <%include pageFive.ejs%>
+                <%include pageFive.ejs%>                
+                <%include pageEight.ejs%>                
             </div>
         </div>
 
@@ -177,8 +195,17 @@
               $('.pageThree').removeClass('active');
             }else if (curPage === 4) {
               $('.pageFour').removeClass('active');
-            }else if (curPage === 4) {
+            }else if (curPage === 5) {
+              subId = arguments[1];
               $('.pageFive').removeClass('active');
+              clearMap();
+              if (subId === 1) {
+                $('#5-1').removeClass('active');
+              }else if (subId === 2) {
+                $('#5-2').removeClass('active');
+              }
+            }else if (curPage === 8) {
+              $('.pageEight').removeClass('active');
             }
           }
 
@@ -188,6 +215,7 @@
             $('.pageThree').addClass('active');
             $('.pageFour').addClass('active');
             $('.pageFive').addClass('active');
+            $('.pageEight').addClass('active');
           }
 
           function clearMap() {
