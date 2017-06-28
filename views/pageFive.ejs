@@ -1,0 +1,199 @@
+<div class="pageFive container active">
+    <div id="viewDiv5"></div>
+    <h2>文化产业重新规划</h2>
+    <div id="main" style="width: 80%;height:400px;"></div>
+</div>
+<script>
+
+  require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/renderers/smartMapping/creators/size",
+      "esri/renderers/smartMapping/statistics/histogram",
+      "esri/widgets/SizeSlider",
+      "esri/widgets/Legend",
+      "esri/core/lang",
+      "dojo/on",
+      "dojo/domReady!"
+    ], function(
+      Map, MapView, FeatureLayer, sizeRendererCreator, histogram,
+      SizeSlider, Legend, lang, on
+    ) {
+
+      // Create a map and add it to a MapView
+
+      var map = new Map({
+        basemap: "gray"
+      });
+
+      var view = new MapView({
+        container: "viewDiv5",
+        map: map,
+        center: [-85.050200, 33.125524],
+        zoom: 6
+      });
+
+      // Create FeatureLayer instance with popupTemplate
+
+      var povLyr = new FeatureLayer({
+        url: "https://10.60.42.201:6443/arcgis/rest/services/NeighbourService/MapServer/0",
+        outFields: ["*"],
+        popupTemplate: {
+          title: "{type}, {name}",
+          content: "{POP_POVERTY} of {TOTPOP_CY} people live below the poverty line.",
+          fieldInfos: [
+          {
+            fieldName: "POP_POVERTY",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }, {
+            fieldName: "TOTPOP_CY",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }]
+        }
+      });
+
+      // configure parameters for the size renderer generator
+      // the layer must be specified along with a field name.
+      // The basemap and then determine
+      // the appropriate default size scheme.
+
+      var sizeParams = {
+        layer: povLyr,
+        basemap: map.basemap,
+        field: "POP_POVERTY",
+        normalizationField: "TOTPOP_CY",
+        legendOptions: {
+          title: "Ratio of people living in poverty"
+        },
+        minValue: 0.15
+      };
+
+      // Initialize the object containing size slider properties.
+      var sliderParams = {
+        container: "slider"
+      };
+
+      // Generate a continuous size renderer based on the
+      // statistics of the data in the provided layer
+      // and field.
+      //
+      // This resolves to an object containing several helpful
+      // properties, including size scheme, statistics,
+      // the renderer, and visual variable
+
+      sizeRendererCreator.createContinuousRenderer(sizeParams)
+        .then(function(response) {
+
+          // set generated renderer on the layer and add it to the map
+
+          povLyr.renderer = response.renderer;
+          map.add(povLyr);
+
+          // set the queried statistics and generated visual variable
+          // to the slider parameters
+
+          sliderParams.statistics = response.statistics;
+          sliderParams.visualVariable = lang.clone(response.visualVariables[
+            0]);
+
+          // Create a legend and add it to the view's UI
+
+          var legend = new Legend({
+            view: view,
+            layerInfos: [
+            {
+              layer: povLyr,
+              title: "Poverty in the southeast U.S."
+            }]
+          });
+          view.ui.add(legend, "bottom-right");
+
+          // generate a histogram for use in the slider. Input the layer
+          // and field name to generate it.
+
+          return histogram({
+            layer: povLyr,
+            field: sizeParams.field,
+            normalizationField: sizeParams.normalizationField,
+            minValue: sizeParams.minValue
+          });
+
+        })
+        .then(function(histogram) {
+
+          // when the promise resolves, set the histogram in the slider parameters
+
+          sliderParams.histogram = histogram;
+
+          // input the slider parameters in the slider's constructor
+          // and add it to the view's UI
+
+          sizeSlider = new SizeSlider(sliderParams);
+          view.ui.add("containerDiv", "bottom-left");
+
+          // when the user slides the handle(s), update the renderer
+          // with the updated color visual variable object
+
+          on(sizeSlider, "handle-value-change", function() {
+            var renderer = povLyr.renderer.clone();
+            renderer.visualVariables = [lang.clone(sizeSlider.visualVariable)];
+            povLyr.renderer = renderer;
+          });
+        })
+        .otherwise(function(err) {
+          console.log("there was an error: ", err);
+        });
+
+    });
+
+</script>
+
+
+<style>
+    .pageFive.container {
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .pageFive.container > div {
+        margin: 20px;
+    }
+
+    .pageFive.container > h2 {
+        align-self: flex-start;
+        color: #0088f5;
+        font-size: 1.2em;
+        margin: 40px;
+    }
+
+    .pageFive.container.active {
+        display: none;
+    }
+
+    #viewDiv5 {
+        padding: 0;
+        margin: 10px;
+        height: 40%;
+        width: 100%;
+        max-width: calc(100% - 202px);
+    }
+
+    #viewDiv5.active {
+        display: none;
+    }
+
+    /*.esri-view {*/
+        /*overflow: auto !important;*/
+    /*}*/
+</style>

@@ -46,16 +46,6 @@
                         <span>交通压力分析</span>
                     </div>
                 </div>
-                <div class="sub">
-                    <ul>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="item" onmouseover="activeMsg(5)" onmouseout="removeActiveId()" onclick="activeSub(event)">
                     <img src="/images/more.svg" alt="">
                     <p>文化产业重新规划</p>
@@ -63,32 +53,12 @@
                         <span>文化产业重新规划</span>
                     </div>
                 </div>
-                <div class="sub">
-                    <ul>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="item" onmouseover="activeMsg(6)" onmouseout="removeActiveId()" onclick="activeSub(event)">
                     <img src="/images/more.svg" alt="">
                     <p>经济适用房规划</p>
                     <div class="aside" id="msg-six">
                         <span>经济适用房规划</span>
                     </div>
-                </div>
-                <div class="sub">
-                    <ul>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                    </ul>
                 </div>
                 <div class="item" onmouseover="activeMsg(7)" onmouseout="removeActiveId()" onclick="console.log(activeId)">
                     <img src="/images/more.svg" alt="">
@@ -104,6 +74,7 @@
                 <%include pageTwo.ejs%>
                 <%include pageThree.ejs%>
                 <%include pageFour.ejs%>
+                <%include pageFive.ejs%>
             </div>
         </div>
 
@@ -183,6 +154,8 @@
               $('.pageThree').removeClass('active');
             }else if (curPage === 4) {
               $('.pageFour').removeClass('active');
+            }else if (curPage === 4) {
+              $('.pageFive').removeClass('active');
             }
           }
 
@@ -191,6 +164,7 @@
             $('.pageTwo').addClass('active');
             $('.pageThree').addClass('active');
             $('.pageFour').addClass('active');
+            $('.pageFive').addClass('active');
           }
         </script>
     </body>
