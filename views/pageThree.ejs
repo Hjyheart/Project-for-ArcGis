@@ -334,10 +334,10 @@
 
   require([
     "esri/Map",
-    "esri/views/MapView",
+    "esri/views/SceneView",
     "esri/layers/FeatureLayer",
     "dojo/domReady!"
-  ], function(Map, MapView, FeatureLayer){
+  ], function(Map, SceneView, FeatureLayer){
     var template = {
       title: "热点分析：",
       content: "<p>{Name}</p>共{Join_Count}个文化产业",
@@ -364,21 +364,30 @@
 
     // Create the Map
     var map = new Map({
-      basemap: "gray"
+      basemap: "oceans",
+      ground: "world-elevation"
     });
 
     // Create the MapView
-    var view = new MapView({
+    var view = new SceneView({
       container: "viewDiv3",
       map: map,
-      center: [121.4737, 31.2304],
-      zoom: 11
+      camera: {
+        position: [-74.0338, 40.6913, 707],
+        tilt: 40,
+        heading: 50
+      }
     });
 
     var featureLayer = new FeatureLayer({
       url: "https://192.168.1.50:6443/arcgis/rest/services/culture_poi/MapServer/1",
       outFields: ["*"],
       popupTemplate: template
+    });
+    view.then(function() {
+      featureLayer.then(function() {
+        view.goTo(featureLayer.fullExtent);
+      });
     });
     map.add(featureLayer)
   });
