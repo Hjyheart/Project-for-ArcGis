@@ -52,22 +52,12 @@
                         <span>文化产业热点</span>
                     </div>
                 </div>
-                <div class="item" onmouseover="activeMsg(4)" onmouseout="removeActiveId()" onclick="activeSub(event)">
+                <div class="item" onmouseover="activeMsg(4)" onmouseout="removeActiveId()" onclick="changePage(4)">
                     <img src="/images/more.svg" alt="">
                     <p>交通压力分析</p>
                     <div class="aside" id="msg-four">
                         <span>交通压力分析</span>
                     </div>
-                </div>
-                <div class="sub">
-                    <ul>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                    </ul>
                 </div>
                 <div class="item" onmouseover="activeMsg(5)" onmouseout="removeActiveId()" onclick="activeSub(event)">
                     <img src="/images/more.svg" alt="">
@@ -76,32 +66,12 @@
                         <span>文化产业重新规划</span>
                     </div>
                 </div>
-                <div class="sub">
-                    <ul>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="item" onmouseover="activeMsg(6)" onmouseout="removeActiveId()" onclick="activeSub(event)">
                     <img src="/images/more.svg" alt="">
                     <p>经济适用房规划</p>
                     <div class="aside" id="msg-six">
                         <span>经济适用房规划</span>
                     </div>
-                </div>
-                <div class="sub">
-                    <ul>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                        <li>
-                            <a>小标题</a>
-                        </li>
-                    </ul>
                 </div>
                 <div class="item" onmouseover="activeMsg(7)" onmouseout="removeActiveId()" onclick="console.log(activeId)">
                     <img src="/images/more.svg" alt="">
@@ -116,6 +86,8 @@
                 <%include pageOne.ejs%>
                 <%include pageTwo.ejs%>
                 <%include pageThree.ejs%>
+                <%include pageFour.ejs%>
+                <%include pageFive.ejs%>
             </div>
         </div>
 
@@ -203,6 +175,10 @@
               }
             }else if (curPage === 3) {
               $('.pageThree').removeClass('active');
+            }else if (curPage === 4) {
+              $('.pageFour').removeClass('active');
+            }else if (curPage === 4) {
+              $('.pageFive').removeClass('active');
             }
           }
 
@@ -210,6 +186,8 @@
             $('.pageOne').addClass('active');
             $('.pageTwo').addClass('active');
             $('.pageThree').addClass('active');
+            $('.pageFour').addClass('active');
+            $('.pageFive').addClass('active');
           }
 
           function clearMap() {
