@@ -1,0 +1,107 @@
+<div class="pageHot container active">
+    <div id="viewDivHot"></div>
+    <h2>文化产业在各个区的分布</h2>
+</div>
+
+<script>
+  require([
+    "esri/Map",
+    "esri/views/SceneView",
+    "esri/layers/FeatureLayer",
+    "dojo/domReady!"
+  ], function(Map, SceneView, FeatureLayer){
+    var template = {
+      title: "文化产业热点信息：",
+      content: "<p>{NAMEC}</p>" + "一共有{Join_Count}个文化产业",
+      fieldInfos: [{
+        fieldName: "MARRIED_CY",
+        format: {
+          digitSeparator: true, // Use a comma separator for large numbers
+          places: 0 // Sets the number of decimal places to 0 and rounds up
+        }
+      }, {
+        fieldName: "NEVMARR_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }, {
+        fieldName: "DIVORCD_CY",
+        format: {
+          digitSeparator: true,
+          places: 0
+        }
+      }]
+    };
+
+    // Create the Map
+    var map = new Map({
+      basemap: "oceans",
+      ground: "world-elevation"
+    });
+
+    // Create the MapView
+    var view = new SceneView({
+      container: "viewDivHot",
+      map: map,
+      camera: {
+        position: [-74.0338, 40.6913, 707],
+        tilt: 40,
+        heading: 50
+      }
+    });
+
+    view.then(function() {
+      featureLayer.then(function() {
+        view.goTo(featureLayer.fullExtent);
+      });
+    });
+
+    var featureLayer = new FeatureLayer({
+      url: "https://10.60.42.201:6443/arcgis/rest/services/AreaCount/MapServer/0",
+      outFields: ["*"],
+      popupTemplate: template
+    });
+
+    map.add(featureLayer)
+
+  });
+</script>
+
+<style>
+    .pageHot.container {
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .pageHot.container > div {
+        margin: 20px;
+    }
+
+    .pageHot.container > h2 {
+        align-self: flex-start;
+        color: #0088f5;
+        font-size: 1.2em;
+        margin: 40px;
+    }
+
+    .pageHot.container.active {
+        display: none;
+    }
+
+    #viewDivHot {
+        padding: 0;
+        margin: 10px;
+        height: 40%;
+        width: 100%;
+        max-width: calc(100% - 202px);
+    }
+
+    #viewDivHot.active {
+        display: none;
+    }
+</style>

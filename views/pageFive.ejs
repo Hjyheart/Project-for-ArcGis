@@ -1,28 +1,29 @@
 <div class="pageFive container active">
     <div class="map-container active" id="5-1">
         <div id="viewDiv5-1"></div>
+        <a href="/arc" target="_blank">查看大图</a>
     </div>
     <div class="map-container active" id="5-2">
         <div id="viewDiv5-2"></div>
+        <select id="area_select">
+            <option value="0">宝山区</option>
+            <option value="1">长宁区</option>
+            <option value="2">奉贤区</option>
+            <option value="3">虹口区</option>
+            <option value="4">黄浦区</option>
+            <option value="5">嘉定区</option>
+            <option value="6">静安区</option>
+            <option value="7">金山区</option>
+            <option value="8">闵行区</option>
+            <option value="9">浦东新区</option>
+            <option value="10">普陀区</option>
+            <option value="11">松江区</option>
+            <option value="12">徐汇区</option>
+            <option value="13">杨浦区</option>
+        </select>
     </div>
-    <select id="area_select">
-        <option value="0">宝山区</option>
-        <option value="1">长宁区</option>
-        <option value="2">奉贤区</option>
-        <option value="3">虹口区</option>
-        <option value="4">黄浦区</option>
-        <option value="5">嘉定区</option>
-        <option value="6">静安区</option>
-        <option value="7">金山区</option>
-        <option value="8">闵行区</option>
-        <option value="9">浦东新区</option>              
-        <option value="10">普陀区</option>       
-        <option value="11">松江区</option>
-        <option value="12">徐汇区</option>
-        <option value="13">杨浦区</option>
-    </select>
     <h2>文化产业重新规划</h2>
-    <div id="main" style="width: 80%;height:400px;"></div>
+    <div id="re-design" style="width: 80%;height:500px;"></div>
 </div>
 <script>
 
@@ -52,7 +53,7 @@
         container: "viewDiv5-1",
         map: map,
         center: [121, 31],
-        zoom: 6
+        zoom: 8
       });
 
       var map2 = new Map({
@@ -63,11 +64,11 @@
         container: "viewDiv5-2",
         map: map2,
         center: [121, 31],
-        zoom: 6
+        zoom: 8
       });
 
-      
-        map_urls = ["baoshanService", "changningService", "fengxianService", "hongkouService", "huangpuService", "jiadingService", "jinganService", 
+
+        map_urls = ["baoshanService", "changningService", "fengxianService", "hongkouService", "huangpuService", "jiadingService", "jinganService",
         "jinshanService", "minghangService", "pudongService", "putuoService", "songjiangService", "xuhuiService", "yangpuService"];
         feature_layers = [];
         for (let i = 0, length = map_urls.length; i < length; i++) {
@@ -76,8 +77,8 @@
                 visible:false
             });
             feature_layers.push(tmpLayer);
-            map2.add(tmpLayer);  
-            
+            map2.add(tmpLayer);
+
         }
         let last = 0;
         feature_layers[0].visible =true;
@@ -86,38 +87,6 @@
             last = parseInt($(this).val());
             feature_layers[last].visible =true
         })
-
-        // var template = {
-        //     title: "文化产业区域信息：",
-        //     content: "<p>{Name}</p>" + "一共有{Join_Count}个文化产业",
-        //     fieldInfos: [{
-        //     fieldName: "MARRIED_CY",
-        //     format: {
-        //     digitSeparator: true, // Use a comma separator for large numbers
-        //     places: 0 // Sets the number of decimal places to 0 and rounds up
-        //     }
-        // }, {
-        //     fieldName: "NEVMARR_CY",
-        //     format: {
-        //     digitSeparator: true,
-        //     places: 0
-        //     }
-        // }, {
-        //     fieldName: "DIVORCD_CY",
-        //     format: {
-        //     digitSeparator: true,
-        //     places: 0
-        //     }
-        // }]
-        // };
-        // // Create FeatureLayer instance with popupTemplate
-        // var featureLayer = new FeatureLayer({
-        //     url: "https://192.168.1.50:6443/arcgis/rest/services/culture_poi/MapServer/0",
-        //     outFields: ["*"],
-        //     popupTemplate: template
-        // });
-
-        // map.add(featureLayer)
 
         var povLyr = new FeatureLayer({
             url: "https://10.60.42.201:6443/arcgis/rest/services/NeighbourService/MapServer/0",
@@ -248,12 +217,21 @@
         display: none;
     }
 
-    #viewDiv5-1 {
+    .map-container {
         padding: 0;
         margin: 10px;
+        width: 100%;
+        height: 400px;
+        max-width: calc(100% - 202px);
+    }
+
+    .map-container.active {
+        display: none;
+    }
+
+    #viewDiv5-1 {
         height: 100%;
         width: 100%;
-        max-width: calc(100% - 202px);
     }
 
     #viewDiv5-1.active {
@@ -261,19 +239,20 @@
     }
 
     #viewDiv5-2 {
-        padding: 0;
-        margin: 10px;
         height: 100%;
         width: 100%;
-        max-width: calc(100% - 202px);
     }
 
     #viewDiv5-2.active {
         display: none;
     }
 
-
-    /*.esri-view {*/
-        /*overflow: auto !important;*/
-    /*}*/
+    #area_select {
+        position: relative;
+        top: -90px;
+        right: -700px;
+        border-top: solid 1px rgba(50,50,50,0.25);
+        height: 35px;
+        cursor: pointer;
+    }
 </style>

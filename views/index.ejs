@@ -7,6 +7,7 @@
         <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
         <script type="text/javascript" src="/javascripts/jquery.msCarousel-min.js"></script>
         <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/4.3/dijit/themes/claro/claro.css">
         <script src="/javascripts/echarts.min.js"></script>
         <script src="https://js.arcgis.com/4.3/"></script>
     </head>
@@ -16,7 +17,7 @@
                 <div class="three">
                     <img src="/images/three1.svg" alt="">
                 </div>
-                <div class="item" onmouseover="activeMsg(1)" onmouseout="removeActiveId()" onclick="changePage(1)">
+                <div class="item" onmouseover="activeMsg(1)" onmouseout="removeActiveId()" onclick="activeSub(event)">
                     <img src="/images/more.svg" alt="" id="pic-one">
                     <p>文化产业分布</p>
                     <div class="aside" id="msg-one">
@@ -24,6 +25,17 @@
                     </div>
                 </div>
                 <div class="sub">
+                    <ul>
+                        <li>
+                            <a onclick="changePage(1, 1)">在各个区的分布</a>
+                        </li>
+                        <li>
+                            <a onclick="changePage(1, 2)">人民广场分布</a>
+                        </li>
+                        <li>
+                            <a onclick="changePage(1, 3)">文化产业查询</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="item" onmouseover="activeMsg(2)" onmouseout="removeActiveId()" onclick="activeSub(event)">
                     <img src="/images/more.svg" alt="">
@@ -105,7 +117,8 @@
                 <%include pageThree.ejs%>
                 <%include pageFour.ejs%>
                 <%include pageFive.ejs%>                
-                <%include pageEight.ejs%>                
+                <%include pageEight.ejs%>
+                <%include pageHot.ejs%>
             </div>
         </div>
 
@@ -179,7 +192,14 @@
             curPage = pageId;
             clearPage();
             if (curPage === 1) {
-              $('.pageOne').removeClass('active');
+              subId = arguments[1];
+              if (subId === 1) {
+                $('.pageOne').removeClass('active');
+              }else if (subId === 2) {
+                $('.pageThree').removeClass('active');
+              }else if (subId === 3) {
+                // TODO: 热点查询
+              }
             }else if (curPage === 2){
               subId = arguments[1];
               $('.pageTwo').removeClass('active');
@@ -192,9 +212,9 @@
                 $('#2-3').removeClass('active');
               }
             }else if (curPage === 3) {
-              $('.pageThree').removeClass('active');
+                $('.pageHot').removeClass('active');
             }else if (curPage === 4) {
-              $('.pageFour').removeClass('active');
+                $('.pageFour').removeClass('active');
             }else if (curPage === 5) {
               subId = arguments[1];
               $('.pageFive').removeClass('active');
@@ -216,12 +236,15 @@
             $('.pageFour').addClass('active');
             $('.pageFive').addClass('active');
             $('.pageEight').addClass('active');
+            $('.pageHot').addClass('active');
           }
 
           function clearMap() {
             $('#2-1').addClass('active');
             $('#2-2').addClass('active');
             $('#2-3').addClass('active');
+            $('#5-1').addClass('active');
+            $('#5-2').addClass('active');
           }
         </script>
     </body>
