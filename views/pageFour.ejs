@@ -1,7 +1,6 @@
 <div class="pageFour container active">
-    <div id="viewDiv4"></div>
     <h2>交通压力分析</h2>
-    <div id="main" style="width: 80%;height:400px;"></div>
+    <div id="viewDiv4"></div>
 </div>
 <script>
 
@@ -43,7 +42,7 @@
     }
 
     var featureLayer = new FeatureLayer({
-        url: "https://192.168.1.50:6443/arcgis/rest/services/hot_line/MapServer/0"
+        url: "https://10.60.42.201:6443/arcgis/rest/services/hot_line/MapServer/0"
     });
 
     map.add(featureLayer);
@@ -80,9 +79,9 @@
     #viewDiv4 {
         padding: 0;
         margin: 10px;
-        height: 40%;
+        height: 90%;
         width: 100%;
-        max-width: calc(100% - 202px);
+        max-width: calc(100% - 50px);
     }
 
     #viewDiv4.active {

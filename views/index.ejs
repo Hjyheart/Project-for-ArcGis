@@ -88,18 +88,11 @@
                         </li>
                     </ul>
                 </div>
-                <div class="item" onmouseover="activeMsg(6)" onmouseout="removeActiveId()" onclick="activeSub(event)">
+                <div class="item" onmouseover="activeMsg(7)" onmouseout="removeActiveId()" onclick="changePage(7)">
                     <img src="/images/more.svg" alt="">
-                    <p>经济适用房规划</p>
-                    <div class="aside" id="msg-six">
-                        <span>经济适用房规划</span>
-                    </div>
-                </div>
-                <div class="item" onmouseover="activeMsg(7)" onmouseout="removeActiveId()" onclick="console.log(activeId)">
-                    <img src="/images/more.svg" alt="">
-                    <p>环同济经济圈</p>
+                    <p>热点区域分析</p>
                     <div class="aside" id="msg-seven">
-                        <span>环同济经济圈</span>
+                        <span>热点区域分析</span>
                     </div>
                 </div>
                 <div class="item" onmouseover="activeMsg(8)" onmouseout="removeActiveId()" onclick="changePage(8)">
@@ -190,18 +183,20 @@
 
           function changePage(pageId) {
             curPage = pageId;
-            clearPage();
             if (curPage === 1) {
               subId = arguments[1];
               if (subId === 1) {
+                clearPage();
                 $('.pageOne').removeClass('active');
               }else if (subId === 2) {
+                clearPage();
                 $('.pageThree').removeClass('active');
               }else if (subId === 3) {
-                // TODO: 热点查询
+                window.open('/search', '_blank')
               }
             }else if (curPage === 2){
               subId = arguments[1];
+              clearPage();
               $('.pageTwo').removeClass('active');
               clearMap();
               if (subId === 1) {
@@ -212,11 +207,14 @@
                 $('#2-3').removeClass('active');
               }
             }else if (curPage === 3) {
-                $('.pageHot').removeClass('active');
+              clearPage();
+              $('.pageHot').removeClass('active');
             }else if (curPage === 4) {
-                $('.pageFour').removeClass('active');
+              clearPage();
+              $('.pageFour').removeClass('active');
             }else if (curPage === 5) {
               subId = arguments[1];
+              clearPage();
               $('.pageFive').removeClass('active');
               clearMap();
               if (subId === 1) {
@@ -224,7 +222,10 @@
               }else if (subId === 2) {
                 $('#5-2').removeClass('active');
               }
+            }else if (curPage === 7){
+              window.open('/analytics', '_blank')
             }else if (curPage === 8) {
+              clearPage();
               $('.pageEight').removeClass('active');
             }
           }

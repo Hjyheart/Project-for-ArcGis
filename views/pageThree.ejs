@@ -380,7 +380,7 @@
     });
 
     var featureLayer = new FeatureLayer({
-      url: "https://192.168.1.50:6443/arcgis/rest/services/culture_poi/MapServer/1",
+      url: "https://10.60.42.201:6443/arcgis/rest/services/culture_poi/MapServer/1",
       outFields: ["*"],
       popupTemplate: template
     });
@@ -434,7 +434,7 @@
 
     .mainGallery {
 
-        background:#000;
+        background-color: white;
 
         color:#fff;
 
@@ -450,7 +450,7 @@
 
         font-size:20px;
 
-        color:#fff;
+        color: black;
 
         margin:0;
 
@@ -462,7 +462,7 @@
 
         font-size:11px;
 
-        color:#fff;
+        color: black;
 
         margin:0;
 
@@ -477,6 +477,8 @@
         width:50px;
 
         padding:10px;
+
+        border-left: none;
 
     }
 
@@ -506,15 +508,16 @@
 
     .mainGallery .middleContent {
 
-        padding:10px 0
-
+        padding:10px 0;
+        border-right: none;
     }
 
     .mainGallery .borderLR {
 
         border-left:1px solid #333;
 
-        border-right:1px solid #333;
+
+        border-left: none;
 
     }
 
