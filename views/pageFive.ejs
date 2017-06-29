@@ -72,7 +72,7 @@
         feature_layers = [];
         for (let i = 0, length = map_urls.length; i < length; i++) {
             let tmpLayer = new FeatureLayer({
-                url: "https://192.168.1.50:6443/arcgis/rest/services/"+map_urls[i]+"/MapServer/0",
+                url: "https://10.60.42.201:6443/arcgis/rest/services/"+map_urls[i]+"/MapServer/0",
                 visible:false
             });
             feature_layers.push(tmpLayer);
